@@ -56,7 +56,7 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
   if (data.receptionConfig === 'Multitasking') {
     missedCallRate += 0.15;
     riskScore += 25;
-    recommendations.push('Staff balancing patients and phones means calls go unanswered during busy times.');
+    recommendations.push('El personal que balancea pacientes y teléfonos hace que las llamadas queden sin respuesta en momentos de alta demanda.');
   }
 
   // 2. Speed to Lead Risk
@@ -64,7 +64,7 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
     case 'Next Day':
       missedCallRate += 0.15;
       riskScore += 25;
-      recommendations.push('Responding next day reduces conversion by 90% vs responding in 5 mins.');
+      recommendations.push('Responder al día siguiente reduce la conversión un 90% en comparación con responder en 5 minutos.');
       break;
     case 'Same Day':
     case '< 1 hour':
@@ -80,17 +80,17 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
   if (data.missedCallsStrategy === 'Nothing') {
     missedCallRate += 0.15;
     riskScore += 30;
-    recommendations.push('Calls going nowhere means 100% loss of that lead.');
+    recommendations.push('Llamadas que no llevan a ningún lado significan el 100% de pérdida de ese prospecto.');
   } else if (data.missedCallsStrategy === 'Voicemail') {
     missedCallRate += 0.10; // Most people don't leave voicemails or wait for call backs
     riskScore += 15;
-    recommendations.push('70% of callers hang up on voicemail and call a competitor.');
+    recommendations.push('El 70% de las personas que llaman cuelgan en el buzón de voz y llaman a un competidor.');
   }
 
   // Ad Spend Risk Multiplier
   if (data.runsAds) {
     riskScore += 10;
-    recommendations.push('Paid traffic with missed calls burns budget twice as fast.');
+    recommendations.push('El tráfico pago combinado con llamadas perdidas consume el presupuesto el doble de rápido.');
   }
 
   // Calculate actual missed calls
@@ -105,13 +105,13 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
 
   if (potentialRevenueRecovered > 20000) {
     riskScore += 20;
-    recommendations.push(`High case value ($${data.avgCaseValue}) means every missed call is expensive.`);
+    recommendations.push(`Un valor de caso alto ($${data.avgCaseValue}) significa que cada llamada perdida es costosa.`);
   }
 
   const riskLevel = riskScore >= 60 ? 'HIGH' : riskScore >= 30 ? 'MEDIUM' : 'LOW';
 
   if (recommendations.length === 0) {
-    recommendations.push('You have decent coverage, but AI ensures 0% slip-through rate 24/7.');
+    recommendations.push('Tiene una cobertura decente, pero la IA asegura un 0% de pérdidas las 24 horas del día.');
   }
 
   return {
@@ -159,8 +159,8 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-bold text-text-muted">Step {step} of {totalSteps}</span>
-            <span className="text-sm font-bold text-brand">{Math.round((step / totalSteps) * 100)}% Complete</span>
+            <span className="text-sm font-bold text-text-muted">Paso {step} de {totalSteps}</span>
+            <span className="text-sm font-bold text-brand">{Math.round((step / totalSteps) * 100)}% Completado</span>
           </div>
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
             <div
@@ -174,11 +174,11 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
         <div className="glass-panel rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">What's your practice name?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cuál es el nombre de su clínica?</h2>
               <input
                 type="text"
                 className="w-full bg-black/40 border border-white/10 rounded-2xl px-6 py-4 text-white text-lg focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/50 transition-all"
-                placeholder="e.g., Orthodontic Partners"
+                placeholder="ej., Clínica Ortodental"
                 value={formData.clinicName}
                 onChange={(e) => updateField('clinicName', e.target.value)}
                 autoFocus
@@ -188,8 +188,8 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">How many daily inbound calls?</h2>
-              <p className="text-text-muted">An estimate is fine.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cuántas llamadas entrantes recibe al día?</h2>
+              <p className="text-text-muted">Un estimado es suficiente.</p>
               <div className="flex items-center gap-4">
                 <input
                   type="number"
@@ -204,21 +204,21 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">How does your front desk work?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cómo funciona su recepción?</h2>
               <div className="grid grid-cols-1 gap-4">
                 <button
                   onClick={() => updateField('receptionConfig', 'Multitasking')}
                   className={`p-6 rounded-2xl border text-left transition-all ${formData.receptionConfig === 'Multitasking' ? 'bg-brand border-brand text-white' : 'bg-white/10 border-white/10 hover:bg-white/20 text-text-muted'}`}
                 >
-                  <div className="text-xl font-bold mb-1">Multitasking</div>
-                  <div className="text-sm opacity-80">Handles check-ins, payments AND phones</div>
+                  <div className="text-xl font-bold mb-1">Multitarea</div>
+                  <div className="text-sm opacity-80">Maneja registros, pagos Y teléfonos</div>
                 </button>
                 <button
                   onClick={() => updateField('receptionConfig', 'Dedicated')}
                   className={`p-6 rounded-2xl border text-left transition-all ${formData.receptionConfig === 'Dedicated' ? 'bg-brand border-brand text-white' : 'bg-white/10 border-white/10 hover:bg-white/20 text-text-muted'}`}
                 >
-                  <div className="text-xl font-bold mb-1">Dedicated Phone Staff</div>
-                  <div className="text-sm opacity-80">Someone answers phones 100% of the time (no in-person tasks)</div>
+                  <div className="text-xl font-bold mb-1">Personal Dedicado al Teléfono</div>
+                  <div className="text-sm opacity-80">Alguien responde teléfonos el 100% del tiempo (sin tareas presenciales)</div>
                 </button>
               </div>
             </div>
@@ -226,7 +226,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">How fast do you call back missed leads?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Qué tan rápido devuelve las llamadas a prospectos perdidos?</h2>
               <div className="space-y-3">
                 {['< 5 min', '< 1 hour', 'Same Day', 'Next Day'].map((option) => (
                   <button
@@ -237,7 +237,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
                       : 'bg-white/10 text-text-muted hover:bg-white/20'
                       }`}
                   >
-                    {option}
+                    {option === '< 5 min' ? '< 5 min' : option === '< 1 hour' ? '< 1 hora' : option === 'Same Day' ? 'Mismo Día' : 'Día Siguiente'}
                   </button>
                 ))}
               </div>
@@ -246,7 +246,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 5 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">Do you run paid ads?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Invierte en anuncios de pago?</h2>
               <p className="text-text-muted">Google Ads, Facebook/IG, TikTok, etc.</p>
               <div className="grid grid-cols-2 gap-4">
                 <button
@@ -256,7 +256,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
                     : 'bg-white/10 text-text-muted hover:bg-white/20'
                     }`}
                 >
-                  Yes
+                  Sí
                 </button>
                 <button
                   onClick={() => updateField('runsAds', false)}
@@ -273,7 +273,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 6 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">What happens to missed calls?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Qué pasa con las llamadas perdidas?</h2>
               <div className="space-y-3">
                 {['Voicemail', 'Answering Service', 'Nothing'].map((option) => (
                   <button
@@ -284,7 +284,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
                       : 'bg-white/10 text-text-muted hover:bg-white/20'
                       }`}
                   >
-                    {option}
+                    {option === 'Voicemail' ? 'Buzón de Voz' : option === 'Answering Service' ? 'Servicio de Contestadora' : 'Nada'}
                   </button>
                 ))}
               </div>
@@ -293,8 +293,8 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 7 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">Average Case Value?</h2>
-              <p className="text-text-muted">Revenue per new patient (e.g., Aligner/Braces case).</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Valor Promedio por Caso?</h2>
+              <p className="text-text-muted">Ingreso por paciente nuevo (ej., caso de Brackets/Alineadores).</p>
               <div className="relative">
                 <span className="absolute left-6 top-1/2 -translate-y-1/2 text-white/50 text-2xl font-bold">$</span>
                 <input
@@ -316,7 +316,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
                 onClick={handleBack}
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold rounded-xl transition-all"
               >
-                Back
+                Atrás
               </button>
             )}
             <button
@@ -324,7 +324,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
               disabled={step === 1 && !formData.clinicName}
               className="flex-1 px-8 py-4 bg-brand hover:bg-brand-hover text-white font-bold rounded-xl shadow-[0_0_30px_rgba(255,106,0,0.3)] transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {step === totalSteps ? 'Calculate Revenue Loss' : 'Continue'}
+              {step === totalSteps ? 'Calcular Pérdida de Ingresos' : 'Continuar'}
             </button>
           </div>
         </div>
@@ -372,7 +372,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-black text-white">Ortho Assessment Results</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-white">Resultados de Evaluación de Ortodoncia</h1>
           <p className="text-xl text-text-muted">{data.clinicName}</p>
         </div>
 
@@ -380,7 +380,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
         <div className={`glass-panel rounded-3xl p-12 border ${getRiskBgColor(results.riskLevel)} text-center relative overflow-hidden`}>
           <div className="absolute inset-0 bg-brand/5 animate-pulse duration-[3000ms]"></div>
           <div className="relative z-10 space-y-2">
-            <h3 className="text-lg text-text-muted font-bold uppercase tracking-widest">Potential Monthly Revenue Recovered</h3>
+            <h3 className="text-lg text-text-muted font-bold uppercase tracking-widest">Ingresos Mensuales Potenciales Recuperados</h3>
             <div className="text-6xl md:text-8xl font-black text-white drop-shadow-[0_0_20px_rgba(255,106,0,0.5)]">
               ${slidingRevenue.toLocaleString()}
             </div>
@@ -388,9 +388,9 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
             {/* Interactive Slider Section */}
             <div className="max-w-md mx-auto mt-8 pt-8 border-t border-white/10">
               <div className="flex justify-between text-sm font-bold text-text-muted mb-4">
-                <span>Conservative (5%)</span>
-                <span>Your Estimate: <span className="text-brand text-lg">{missedCallRate}%</span></span>
-                <span>Aggressive (50%)</span>
+                <span>Conservador (5%)</span>
+                <span>Su Estimación: <span className="text-brand text-lg">{missedCallRate}%</span></span>
+                <span>Agresivo (50%)</span>
               </div>
               <input
                 type="range"
@@ -402,7 +402,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
                 className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-brand [&::-webkit-slider-thumb]:shadow-[0_0_15px_rgba(255,106,0,0.5)]"
               />
               <p className="text-xs text-text-muted mt-4">
-                *Calculation: {slidingMissedCalls} missed calls x 5% conversion x ${data.avgCaseValue.toLocaleString()} case value
+                *Cálculo: {slidingMissedCalls} llamadas perdidas x 5% de conversión x ${data.avgCaseValue.toLocaleString()} de valor por caso
               </p>
             </div>
           </div>
@@ -411,21 +411,21 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
         {/* Key Metrics */}
         <div className="grid md:grid-cols-2 gap-6">
           <div className="glass-panel rounded-2xl p-8 border border-white/10">
-            <div className="text-text-muted text-sm font-black uppercase tracking-widest mb-4">Missed Calls</div>
+            <div className="text-text-muted text-sm font-black uppercase tracking-widest mb-4">Llamadas Perdidas</div>
             <div className="text-5xl font-black text-white">{slidingMissedCalls}</div>
-            <div className="text-text-muted mt-2">calls/month slipping through</div>
+            <div className="text-text-muted mt-2">llamadas/mes que se escapan</div>
           </div>
           <div className="glass-panel rounded-2xl p-8 border border-white/10">
-            <div className="text-text-muted text-sm font-black uppercase tracking-widest mb-4">Lost New Starts</div>
+            <div className="text-text-muted text-sm font-black uppercase tracking-widest mb-4">Nuevos Casos Perdidos</div>
             {/* Estimate lost starts based on revenue divided by case value */}
             <div className="text-5xl font-black text-brand">{(slidingRevenue / data.avgCaseValue).toFixed(1)}</div>
-            <div className="text-text-muted mt-2">cases/month missed</div>
+            <div className="text-text-muted mt-2">casos/mes perdidos</div>
           </div>
         </div>
 
         {/* Analysis */}
         <div className="glass-panel rounded-2xl p-8 border border-white/10">
-          <h3 className="text-2xl font-bold text-white mb-6">Why you're losing patients</h3>
+          <h3 className="text-2xl font-bold text-white mb-6">Por qué está perdiendo pacientes</h3>
           <div className="space-y-4">
             {results.recommendations.map((rec, idx) => (
               <div key={idx} className="flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-white/5">
@@ -440,15 +440,15 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
 
         {/* CTA */}
         <div className="text-center space-y-6 py-8">
-          <h2 className="text-3xl md:text-4xl font-black text-white">Capture that ${slidingRevenue.toLocaleString()}</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-white">Capture esos ${slidingRevenue.toLocaleString()}</h2>
           <p className="text-xl text-text-muted max-w-2xl mx-auto">
-            Nova AI Voice answers instantly, qualifies the patient, and books the consult.
+            Nova AI Voice responde al instante, califica al paciente y agenda la consulta.
           </p>
           <button
             onClick={onBookDemo}
             className="px-12 py-5 bg-brand hover:bg-brand-hover text-white text-xl font-black rounded-2xl shadow-[0_0_40px_rgba(255,106,0,0.4)] transition-all transform hover:scale-105"
           >
-            Claim Your Free Demo
+            Reclame Su Demo Gratuita
           </button>
         </div>
       </div>
@@ -633,22 +633,22 @@ const App = () => {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-8">
-              <a href="#live-demo" className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all">Live Demo</a>
-              <a href="#features" className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all">Features</a>
-              <a href="#pricing" className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all">Pricing</a>
+              <a href="#live-demo" className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all">Demo en Vivo</a>
+              <a href="#features" className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all">Características</a>
+              <a href="#pricing" className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all">Precios</a>
               <button
                 onClick={() => setView('assessment')}
                 className="text-sm font-medium text-text-muted hover:text-white hover:text-glow transition-all flex items-center gap-2"
               >
-                <span>ROI Calculator</span>
-                <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] uppercase tracking-wider font-bold">New</span>
+                <span>Calculadora de Retorno</span>
+                <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] uppercase tracking-wider font-bold">Nuevo</span>
               </button>
             </nav>
 
             {/* CTA */}
             <div className="flex items-center gap-4">
               <a href="#demo" className="hidden md:inline-flex items-center justify-center px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold rounded-full text-white backdrop-blur-md transition-all hover:scale-105 hover:border-brand/30">
-                Book a Demo
+                Agendar una Demo
               </a>
               {/* Mobile Menu Button */}
               <button
@@ -671,16 +671,16 @@ const App = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-bg-card border-b border-white/10">
             <div className="px-4 pt-2 pb-6 space-y-2">
-              <a href="#live-demo" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md">Live Demo</a>
-              <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md">Features</a>
-              <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md">Pricing</a>
+              <a href="#live-demo" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md">Demo en Vivo</a>
+              <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md">Características</a>
+              <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md">Precios</a>
               <button
                 onClick={() => { setView('assessment'); setMobileMenuOpen(false); }}
                 className="block px-3 py-2 text-base font-medium text-text-muted hover:text-white hover:bg-white/5 rounded-md w-full text-left"
               >
-                ROI Calculator
+                Calculadora de Retorno
               </button>
-              <a href="#demo" onClick={() => setMobileMenuOpen(false)} className="block w-full text-center mt-4 px-6 py-3 border border-transparent text-base font-bold rounded-lg text-white bg-brand hover:bg-brand-hover">Book a Demo</a>
+              <a href="#demo" onClick={() => setMobileMenuOpen(false)} className="block w-full text-center mt-4 px-6 py-3 border border-transparent text-base font-bold rounded-lg text-white bg-brand hover:bg-brand-hover">Agendar una Demo</a>
             </div>
           </div>
         )}
@@ -704,20 +704,20 @@ const App = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
               </span>
-              For Growth Focused Orthodontists
+              Para Ortodoncistas Enfocados en el Crecimiento
             </div>
 
             {/* H1 */}
             <h1 className="text-5xl md:text-8xl font-black text-white tracking-tight mb-8 leading-[1.0] drop-shadow-xl relative z-20">
-              Stop Losing Patients <br className="hidden md:block" />
-              to <span className="gradient-text relative inline-block">
-                Missed Calls
+              Deje de Perder Pacientes <br className="hidden md:block" />
+              por <span className="gradient-text relative inline-block">
+                Llamadas Perdidas
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="mt-4 max-w-3xl mx-auto text-xl md:text-2xl text-text-muted leading-relaxed font-light">
-              Your front desk is overwhelmed. <strong className="text-white font-semibold">Nova answers instantly</strong>, qualifies patients, and books consultations <span className="text-brand font-bold">24/7</span>.
+              Su recepción está saturada. <strong className="text-white font-semibold">Nova responde al instante</strong>, califica a los pacientes y agenda consultas <span className="text-brand font-bold">24/7</span>.
             </p>
 
             {/* CTA Buttons */}
@@ -730,23 +730,23 @@ const App = () => {
                 className="group relative flex items-center justify-center gap-3 px-8 py-5 bg-brand hover:bg-brand-hover text-white text-lg font-bold rounded-2xl shadow-[0_0_40px_rgba(255,106,0,0.3)] hover:shadow-[0_0_60px_rgba(255,106,0,0.5)] transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:animate-shimmer"></div>
-                <span>Talk to Nova Now</span>
+                <span>Hable con Nova Ahora</span>
                 <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
               </button>
 
               <button
                 onClick={() => setView('assessment')}
                 className="flex items-center justify-center gap-3 px-8 py-5 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-2xl border border-white/10 hover:border-white/20 backdrop-blur-md transition-all">
-                <span>Take Assessment</span>
+                <span>Realizar Evaluación</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
 
             {/* Trust Badges */}
             <div className="mt-16 pt-8 border-t border-white/5 flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-              <div className="flex items-center gap-2 text-sm font-bold tracking-widest"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.21a12.002 12.002 0 00-16.45 0A12.002 12.002 0 003 12c0 2.757 1.12 5.257 2.988 7.071L12 22l6.012-2.929A12.002 12.002 0 0021 12c0-2.757-1.12-5.257-2.988-7.071z"></path></svg> HIPAA COMPLIANT</div>
-              <div className="flex items-center gap-2 text-sm font-bold tracking-widest"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> PRACTICE MANAGEMENT SYNC</div>
-              <div className="flex items-center gap-2 text-sm font-bold tracking-widest"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> INVISALIGN READY</div>
+              <div className="flex items-center gap-2 text-sm font-bold tracking-widest"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.21a12.002 12.002 0 00-16.45 0A12.002 12.002 0 003 12c0 2.757 1.12 5.257 2.988 7.071L12 22l6.012-2.929A12.002 12.002 0 0021 12c0-2.757-1.12-5.257-2.988-7.071z"></path></svg> CUMPLE CON HIPAA</div>
+              <div className="flex items-center gap-2 text-sm font-bold tracking-widest"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> SINCRONIZACIÓN CON SOFTWARE MÉDICO</div>
+              <div className="flex items-center gap-2 text-sm font-bold tracking-widest"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> LISTO PARA INVISALIGN</div>
             </div>
 
           </div>
@@ -758,18 +758,18 @@ const App = () => {
 
           <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
             <div className="inline-block px-4 py-1 rounded-full border border-brand/20 bg-brand/5 backdrop-blur-sm mb-6">
-              <span className="text-brand font-bold tracking-widest uppercase text-xs animate-pulse">Interactive Demo</span>
+              <span className="text-brand font-bold tracking-widest uppercase text-xs animate-pulse">Demo Interactiva</span>
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6">Experience Nova Live</h2>
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-6">Experimente Nova en Vivo</h2>
 
             <p className="text-text-muted text-lg max-w-2xl mx-auto mb-12">
-              Chloe is a virtual dental receptionist built with Nova AI Voice. Try a real conversation and see how inbound clinic calls are handled.
+              Chloe es una recepcionista virtual dental construida con Nova AI Voice. Pruebe una conversación real y vea cómo se manejan las llamadas entrantes a la clínica.
             </p>
 
             {/* Clarification Text */}
             <p className="text-sm text-text-muted/60 mb-8 font-medium">
-              This is a live voice demo. Appointment booking is disabled in this experience. Use it to test call quality, speed, and how Nova handles real patient conversations.
+              Esta es una demo de voz en vivo. La programación de citas está desactivada en esta experiencia. Úsela para evaluar la calidad, la velocidad de la llamada y cómo Nova maneja conversaciones reales con pacientes.
             </p>
 
 
@@ -830,7 +830,7 @@ const App = () => {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:animate-shimmer"></div>
                   <Phone className="w-6 h-6 animate-pulse" />
-                  <span>Start Demo Call</span>
+                  <span>Iniciar Llamada de Prueba</span>
                 </button>
 
               </div>
@@ -842,9 +842,9 @@ const App = () => {
         <section id="features" className="py-24 relative bg-bg-card/50">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-4">Built for Growth Focused Orthodontists</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-4">Construido para Ortodoncistas Enfocados en el Crecimiento</h2>
               <p className="text-text-muted max-w-2xl mx-auto">
-                Don't let your "Treatment Coordinator" waste time on tire kickers. Let AI handle the intake.
+                No deje que su "Coordinador de Tratamiento" pierda tiempo con curiosos. Deje que la IA maneje la recepción inicial.
               </p>
             </div>
 
@@ -853,48 +853,48 @@ const App = () => {
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Zero Missed Calls</h3>
-                <p className="text-text-muted">Nova picks up instantly on the first ring, ensuring you never lose a potential new patient to a competitor's voicemail.</p>
+                <h3 className="text-xl font-bold mb-2">Cero Llamadas Perdidas</h3>
+                <p className="text-text-muted">Nova responde al instante en el primer timbre, asegurando que nunca pierda un paciente nuevo potencial en el buzón de voz de la competencia.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Smart Scheduling</h3>
-                <p className="text-text-muted">Directly books New Patient Exams into your calendar, prioritizing high value Invisalign and Braces consultations.</p>
+                <h3 className="text-xl font-bold mb-2">Programación Inteligente</h3>
+                <p className="text-text-muted">Reserva directamente Exámenes de Pacientes Nuevos en su calendario, priorizando consultas de alto valor para Invisalign y Brackets.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Patient Commitment</h3>
-                <p className="text-text-muted">Automates the entire intake process by answering questions and verifying insurance on the spot. Patients arrive at your clinic ready to start treatment.</p>
+                <h3 className="text-xl font-bold mb-2">Compromiso del Paciente</h3>
+                <p className="text-text-muted">Automatiza todo el proceso de recepción inicial respondiendo preguntas y verificando seguros al momento. Los pacientes llegan a su clínica listos para comenzar el tratamiento.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">24/7 Coverage</h3>
-                <p className="text-text-muted">Capture leads from your late night Instagram ads. Nova works nights, weekends, and holidays without overtime pay.</p>
+                <h3 className="text-xl font-bold mb-2">Cobertura 24/7</h3>
+                <p className="text-text-muted">Capture prospectos de sus anuncios nocturnos en Instagram. Nova trabaja noches, fines de semana y días festivos sin pago de horas extras.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Reactivation Campaigns</h3>
-                <p className="text-text-muted">Automatically calls old leads to re-engage them. "Are you still interested in fixing your smile?"</p>
+                <h3 className="text-xl font-bold mb-2">Campañas de Reactivación</h3>
+                <p className="text-text-muted">Llama automáticamente a antiguos prospectos para volver a involucrarlos. "¿Todavía está interesado en mejorar su sonrisa?"</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Multilingual Support</h3>
-                <p className="text-text-muted">Serves your entire community by switching seamlessly between English, Spanish, and other key languages.</p>
+                <h3 className="text-xl font-bold mb-2">Soporte Multilingüe</h3>
+                <p className="text-text-muted">Sirve a toda su comunidad cambiando de manera fluida entre inglés, español y otros idiomas clave.</p>
               </div>
             </div>
           </div>
@@ -916,15 +916,15 @@ const App = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-brand/20 to-purple-600/20 blur-3xl opacity-10 group-hover:opacity-30 transition-opacity duration-500"></div>
 
               <span className="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs font-bold uppercase tracking-wide">
-                High Demand • Limited Availability
+                Alta Demanda • Disponibilidad Limitada
               </span>
 
               <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                We'll Build Your Custom Demo in <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">48 Hours</span>
+                Construiremos Su Demo Personalizada en <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">48 Horas</span>
               </h2>
 
               <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
-                Don't just take our word for it. We will configure a <strong>fully functional AI receptionist</strong> trained on your specific clinic data. Completely free. No risk.
+                No confíe solo en nuestra palabra. Configuraremos una <strong>recepcionista virtual 100% funcional</strong> entrenada con los datos de su clínica. Gratis. Sin riesgo.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
@@ -933,11 +933,11 @@ const App = () => {
                   className="px-10 py-5 bg-brand hover:bg-brand-hover text-white text-xl font-black rounded-2xl shadow-[0_0_40px_rgba(255,106,0,0.3)] hover:shadow-[0_0_60px_rgba(255,106,0,0.5)] transition-all hover:-translate-y-1 transform flex items-center gap-3 group"
                 >
                   <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                  Claim Free 48h Demo
+                  Reclamar Demo Gratis de 48h
                 </a>
                 <div className="flex items-center gap-2 text-sm text-text-muted opacity-80">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                  <span>Only 2 spots left this week</span>
+                  <span>Solo 2 lugares disponibles esta semana</span>
                 </div>
               </div>
 
@@ -949,17 +949,17 @@ const App = () => {
         < section id="pricing" className="py-24 bg-bg-main relative" >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
-              <p className="text-text-muted mb-8">No hidden fees. Just booked patients.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Precios Simples y Transparentes</h2>
+              <p className="text-text-muted mb-8">Sin tarifas ocultas. Solo pacientes agendados.</p>
 
               {/* Setup Banner */}
               <div className="inline-block bg-brand/10 border border-brand/30 rounded-lg px-6 py-2 mb-8">
-                <span className="text-brand font-semibold text-sm md:text-base">$297 One-Time Setup • 14-Day Live Trial Included</span>
+                <span className="text-brand font-semibold text-sm md:text-base">$297 Configuración Única • Incluye Prueba en Vivo de 14 Días</span>
               </div>
 
               {/* Toggle */}
               <div className="flex items-center justify-center gap-4 mb-8">
-                <span className={`font-medium transition-colors ${!isYearly ? 'text-white' : 'text-text-muted'}`}>Monthly</span>
+                <span className={`font-medium transition-colors ${!isYearly ? 'text-white' : 'text-text-muted'}`}>Mensual</span>
                 <div className="relative inline-block w-14 h-8 align-middle select-none transition duration-200 ease-in">
                   <input
                     type="checkbox"
@@ -971,8 +971,8 @@ const App = () => {
                   />
                   <label htmlFor="price-toggle" className="toggle-label block overflow-hidden h-8 rounded-full bg-gray-700 cursor-pointer transition-colors duration-300"></label>
                 </div>
-                <span className={`font-medium transition-colors ${isYearly ? 'text-white' : 'text-text-muted'}`}>Yearly</span>
-                <span className="ml-2 bg-brand text-white text-xs font-bold px-2 py-1 rounded-full">Save 20%</span>
+                <span className={`font-medium transition-colors ${isYearly ? 'text-white' : 'text-text-muted'}`}>Anual</span>
+                <span className="ml-2 bg-brand text-white text-xs font-bold px-2 py-1 rounded-full">Ahorra 20%</span>
               </div>
             </div>
 
@@ -983,49 +983,49 @@ const App = () => {
               <div className="bg-bg-card border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all flex flex-col h-full">
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white">Starter</h3>
-                  <p className="text-sm text-text-muted mt-2 h-10">Perfect for smaller clinics just starting with automation.</p>
+                  <p className="text-sm text-text-muted mt-2 h-10">Perfecto para clínicas pequeñas empezando a automatizar.</p>
                 </div>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-white">${isYearly ? 237 : 297}</span>
-                  <span className="text-text-muted">/mo</span>
-                  <div className="text-xs text-text-muted mt-1">{isYearly ? 'Billed Yearly' : 'Billed Monthly'}</div>
+                  <span className="text-text-muted">/mes</span>
+                  <div className="text-xs text-text-muted mt-1">{isYearly ? 'Facturado Anualmente' : 'Facturado Mensualmente'}</div>
                 </div>
-                <a href="#demo" className="block w-full text-center py-3 border border-white/20 rounded-lg text-white font-semibold hover:bg-white/5 transition-colors">Select Plan</a>
+                <a href="#demo" className="block w-full text-center py-3 border border-white/20 rounded-lg text-white font-semibold hover:bg-white/5 transition-colors">Seleccionar Plan</a>
                 <ul className="mt-8 space-y-4 text-sm text-text-muted flex-grow">
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 1 AI Voice Agent</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 250 Minutes / Month</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 24/7 Inbound Call Handling</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Basic Qualification & Booking</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Email Notifications</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 1 Agente de Voz IA</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 250 Minutos / Mes</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Manejo de Llamadas Entrantes 24/7</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Calificación y Programación Básica</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Notificaciones por Correo</li>
                 </ul>
                 <div className="mt-6 pt-6 border-t border-white/5 text-xs text-text-muted text-center">
-                  Minutes reset monthly
+                  Los minutos se reinician mensualmente
                 </div>
               </div>
 
               {/* Growth */}
               <div className="bg-bg-card border border-brand/50 rounded-2xl p-8 relative shadow-[0_0_40px_rgba(255,106,0,0.15)] transform md:-translate-y-4 flex flex-col h-full">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Most Popular</div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Más Popular</div>
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white">Growth</h3>
-                  <p className="text-sm text-text-muted mt-2 h-10">Our standard plan for growing practices with EMR needs.</p>
+                  <p className="text-sm text-text-muted mt-2 h-10">Nuestro plan estándar para prácticas en crecimiento.</p>
                 </div>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-white">${isYearly ? 397 : 497}</span>
-                  <span className="text-text-muted">/mo</span>
-                  <div className="text-xs text-text-muted mt-1">{isYearly ? 'Billed Yearly' : 'Billed Monthly'}</div>
+                  <span className="text-text-muted">/mes</span>
+                  <div className="text-xs text-text-muted mt-1">{isYearly ? 'Facturado Anualmente' : 'Facturado Mensualmente'}</div>
                 </div>
-                <a href="#demo" className="block w-full text-center py-3 bg-brand rounded-lg text-white font-bold hover:bg-brand-hover transition-colors shadow-lg">Start 14-Day Trial</a>
+                <a href="#demo" className="block w-full text-center py-3 bg-brand rounded-lg text-white font-bold hover:bg-brand-hover transition-colors shadow-lg">Iniciar Prueba de 14 Días</a>
                 <ul className="mt-8 space-y-4 text-sm text-text-muted flex-grow">
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 1 AI Voice Agent</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 400 Minutes / Month</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 24/7 Inbound Call Handling</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span className="text-white font-medium">Seamless Calendar Sync</span></li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Advanced Patient Qualification</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Smart Scheduling Logic</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 1 Agente de Voz IA</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 400 Minutos / Mes</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Manejo de Llamadas Entrantes 24/7</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span className="text-white font-medium">Sincronización Perfecta de Calendario</span></li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Calificación Avanzada de Pacientes</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Lógica de Programación Inteligente</li>
                 </ul>
                 <div className="mt-6 pt-6 border-t border-white/5 text-xs text-text-muted text-center">
-                  Add-ons available for extra minutes
+                  Complementos disponibles para minutos extra
                 </div>
               </div>
 
@@ -1033,24 +1033,24 @@ const App = () => {
               <div className="bg-bg-card border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all flex flex-col h-full">
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white">Pro</h3>
-                  <p className="text-sm text-text-muted mt-2 h-10">Maximum power for high-volume clinics.</p>
+                  <p className="text-sm text-text-muted mt-2 h-10">Máxima potencia para clínicas de alto volumen.</p>
                 </div>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-white">${isYearly ? 557 : 697}</span>
-                  <span className="text-text-muted">/mo</span>
-                  <div className="text-xs text-text-muted mt-1">{isYearly ? 'Billed Yearly' : 'Billed Monthly'}</div>
+                  <span className="text-text-muted">/mes</span>
+                  <div className="text-xs text-text-muted mt-1">{isYearly ? 'Facturado Anualmente' : 'Facturado Mensualmente'}</div>
                 </div>
-                <a href="#demo" className="block w-full text-center py-3 border border-white/20 rounded-lg text-white font-semibold hover:bg-white/5 transition-colors">Select Plan</a>
+                <a href="#demo" className="block w-full text-center py-3 border border-white/20 rounded-lg text-white font-semibold hover:bg-white/5 transition-colors">Seleccionar Plan</a>
                 <ul className="mt-8 space-y-4 text-sm text-text-muted flex-grow">
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Up to 2 AI Voice Agents</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 600 Minutes / Month</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 24/7 Inbound Call Handling</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Priority Support</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Call Overflow Management</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Custom Scripting</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Hasta 2 Agentes de Voz IA</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 600 Minutos / Mes</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Manejo de Llamadas Entrantes 24/7</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Soporte Prioritario</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Manejo de Desbordamiento de Llamadas</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Guiones Personalizados</li>
                 </ul>
                 <div className="mt-6 pt-6 border-t border-white/5 text-xs text-text-muted text-center">
-                  Best for high call volume clinics
+                  Ideal para clínicas con alto volumen
                 </div>
               </div>
 
@@ -1071,20 +1071,20 @@ const App = () => {
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs font-bold uppercase tracking-wider mb-6">
                     <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
-                    Priority Access
+                    Acceso Prioritario
                   </div>
                   <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
-                    Claim Your Practice's <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">24/7 AI Receptionist</span>
+                    Reclame Para Su Clínica Una <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">Recepcionista de IA 24/7</span>
                   </h2>
                   <p className="text-xl text-text-muted leading-relaxed">
-                    Join the top dental practices automating their front desk.
-                    Qualify every lead, fill your calendar, and set it up in less than 24 hours.
+                    Únase a las mejores clínicas dentales que están automatizando su recepción.
+                    Califique a cada prospecto, llene su calendario y configúrelo en menos de 24 horas.
                   </p>
                 </div>
 
                 {/* Trust Elements */}
                 <div className="pt-8 border-t border-white/5">
-                  <p className="text-sm text-text-muted font-medium mb-4 uppercase tracking-widest">Compatible With</p>
+                  <p className="text-sm text-text-muted font-medium mb-4 uppercase tracking-widest">Compatible Con</p>
                   <div className="flex flex-wrap gap-4 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
                     {/* Text-based mock logos for now, or ensure image assets exist. Using sleek text badges for safety if images missing */}
                     <span className="px-4 py-2 border border-white/10 rounded-lg text-white/60 font-semibold">Google Calendar</span>
@@ -1096,7 +1096,7 @@ const App = () => {
 
                 <div className="flex items-center gap-2 text-xs text-white/30">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                  <span>Secure & Private Data Handling</span>
+                  <span>Manejo de Datos Seguro y Privado</span>
                 </div>
               </div>
 
@@ -1113,12 +1113,12 @@ const App = () => {
                       <div className="w-20 h-20 bg-green-500/10 border border-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
                         <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                       </div>
-                      <h3 className="text-3xl font-bold text-white mb-3">Spot Reserved!</h3>
-                      <p className="text-text-muted mb-6">Our integration team will contact you shortly to confirm your strategy call.</p>
+                      <h3 className="text-3xl font-bold text-white mb-3">¡Lugar Reservado!</h3>
+                      <p className="text-text-muted mb-6">Nuestro equipo de integración lo contactará en breve para confirmar su llamada de estrategia.</p>
                       <div className="w-full bg-white/5 rounded-lg p-4 border border-white/10">
                         <div className="flex justify-between text-xs text-text-muted mb-2">
-                          <span>Status</span>
-                          <span className="text-green-400">Pending Review</span>
+                          <span>Estado</span>
+                          <span className="text-green-400">Revisión Pendiente</span>
                         </div>
                         <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden">
                           <div className="bg-green-500 h-full w-1/3 animate-[loading_2s_ease-in-out_infinite]"></div>
@@ -1128,41 +1128,41 @@ const App = () => {
                   ) : (
                     <>
                       <div className="mb-8">
-                        <h3 className="text-2xl font-bold text-white mb-2">Schedule Strategy Call</h3>
-                        <p className="text-sm text-text-muted">Fill out the intake form below. We only accept 5 new clinics per week.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">Agendar Llamada de Estrategia</h3>
+                        <p className="text-sm text-text-muted">Complete el formulario a continuación. Solo aceptamos 5 clínicas nuevas por semana.</p>
                       </div>
 
                       <form onSubmit={handleBookDemo} className="space-y-5 relative z-10">
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label htmlFor="name" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Practice Owner</label>
-                            <input type="text" id="name" required className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all placeholder:text-white/20" placeholder="Dr. Name" />
+                            <label htmlFor="name" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Propietario de la Clínica</label>
+                            <input type="text" id="name" required className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all placeholder:text-white/20" placeholder="Nombre del Dr." />
                           </div>
                           <div>
-                            <label htmlFor="email" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Work Email</label>
-                            <input type="email" id="email" required className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all placeholder:text-white/20" placeholder="name@clinic.com" />
+                            <label htmlFor="email" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Correo de Trabajo</label>
+                            <input type="email" id="email" required className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all placeholder:text-white/20" placeholder="nombre@clinica.com" />
                           </div>
                         </div>
 
                         <div>
-                          <label htmlFor="calendar" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Current Calendar System</label>
+                          <label htmlFor="calendar" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Sistema de Calendario Actual</label>
                           <select id="calendar" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all appearance-none cursor-pointer">
-                            <option value="" disabled selected>Select System...</option>
+                            <option value="" disabled selected>Seleccionar Sistema...</option>
                             <option>Google Calendar</option>
                             <option>Outlook / Office 365</option>
                             <option>iCloud</option>
-                            <option>Paper Agenda</option>
-                            <option>Other</option>
+                            <option>Agenda de Papel</option>
+                            <option>Otro</option>
                           </select>
                         </div>
 
                         <div>
-                          <label htmlFor="volume" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Monthly Patient Volume</label>
+                          <label htmlFor="volume" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Volumen Mensual de Pacientes</label>
                           <select id="volume" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all appearance-none cursor-pointer">
-                            <option value="" disabled selected>Select Volume...</option>
-                            <option>Startup (0-200)</option>
-                            <option>Growing (200-1000)</option>
-                            <option>High Volume (1000+)</option>
+                            <option value="" disabled selected>Seleccionar Volumen...</option>
+                            <option>Nuevos (0-200)</option>
+                            <option>En Crecimiento (200-1000)</option>
+                            <option>Alto Volumen (1000+)</option>
                           </select>
                         </div>
 
@@ -1171,12 +1171,12 @@ const App = () => {
                           disabled={formState === 'processing'}
                           className="w-full bg-brand hover:bg-brand-hover text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(255,106,0,0.3)] transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-wait mt-4 flex items-center justify-center gap-2 group"
                         >
-                          <span>{formState === 'processing' ? 'Processing...' : 'Schedule Strategy Call'}</span>
+                          <span>{formState === 'processing' ? 'Procesando...' : 'Agendar Llamada de Estrategia'}</span>
                           {formState !== 'processing' && <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>}
                         </button>
 
                         <p className="text-center text-[10px] text-text-muted">
-                          No credit card required. Application takes less than 30 seconds.
+                          No se requiere tarjeta de crédito. La solicitud toma menos de 30 segundos.
                         </p>
                       </form>
                     </>
