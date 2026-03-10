@@ -764,7 +764,7 @@ const App = () => {
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6">Experimente Nova en Vivo</h2>
 
             <p className="text-text-muted text-lg max-w-2xl mx-auto mb-12">
-              Chloe es una recepcionista virtual dental construida con Nova AI Voice. Pruebe una conversación real y vea cómo se manejan las llamadas entrantes a la clínica.
+              Valentina es una recepcionista virtual para clínicas dentales impulsada por Nova AI Voice. Experimente una conversación real y descubra cómo gestionamos las llamadas entrantes para su clínica.
             </p>
 
             {/* Clarification Text */}
@@ -796,7 +796,10 @@ const App = () => {
                       let widgetBtn: HTMLElement | null = null;
 
                       if (container && container.shadowRoot) {
-                        widgetBtn = container.shadowRoot.querySelector('button[aria-label="Talk to Chloe"]');
+                        // Try both Spanish and English aria-labels just in case
+                        widgetBtn = container.shadowRoot.querySelector('button[aria-label="Habla con Valentina"]') ||
+                          container.shadowRoot.querySelector('button[aria-label="Talk to Valentina"]') ||
+                          container.shadowRoot.querySelector('button[aria-label="Talk to Chloe"]');
                       }
 
                       // 2. Fallback: Try standard selectors if Shadow DOM method fails
@@ -844,7 +847,7 @@ const App = () => {
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold mb-4">Construido para Ortodoncistas Enfocados en el Crecimiento</h2>
               <p className="text-text-muted max-w-2xl mx-auto">
-                No deje que su "Coordinador de Tratamiento" pierda tiempo con curiosos. Deje que la IA maneje la recepción inicial.
+                Evite que su Coordinador de Tratamiento pierda tiempo con consultas que no califican. Deje que nuestra IA gestione la recepción inicial de manera profesional.
               </p>
             </div>
 
@@ -853,32 +856,32 @@ const App = () => {
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Cero Llamadas Perdidas</h3>
-                <p className="text-text-muted">Nova responde al instante en el primer timbre, asegurando que nunca pierda un paciente nuevo potencial en el buzón de voz de la competencia.</p>
+                <h3 className="text-xl font-bold mb-2">Atención Inmediata</h3>
+                <p className="text-text-muted">Valentina atiende al primer timbre, 24/7, asegurando que ningún paciente potencial termine en el buzón de voz de la competencia.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Programación Inteligente</h3>
-                <p className="text-text-muted">Reserva directamente Exámenes de Pacientes Nuevos en su calendario, priorizando consultas de alto valor para Invisalign y Brackets.</p>
+                <h3 className="text-xl font-bold mb-2">Agendamiento Inteligente</h3>
+                <p className="text-text-muted">Gestione citas para nuevos pacientes directamente en su calendario, priorizando consultas de alto valor para tratamientos de Ortodoncia e Invisalign.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Compromiso del Paciente</h3>
-                <p className="text-text-muted">Automatiza todo el proceso de recepción inicial respondiendo preguntas y verificando seguros al momento. Los pacientes llegan a su clínica listos para comenzar el tratamiento.</p>
+                <h3 className="text-xl font-bold mb-2">Gestión Integral</h3>
+                <p className="text-text-muted">Automatiza la recepción inicial, resuelve dudas frecuentes y verifica datos de seguros al instante. Los pacientes llegan a su clínica listos para iniciar.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Cobertura 24/7</h3>
-                <p className="text-text-muted">Capture prospectos de sus anuncios nocturnos en Instagram. Nova trabaja noches, fines de semana y días festivos sin pago de horas extras.</p>
+                <h3 className="text-xl font-bold mb-2">Cobertura Ininterrumpida</h3>
+                <p className="text-text-muted">Capture leads de sus campañas nocturnas en redes sociales. Valentina trabaja noches, fines de semana y festivos sin interrupciones.</p>
               </div>
 
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
@@ -924,7 +927,7 @@ const App = () => {
               </h2>
 
               <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
-                No confíe solo en nuestra palabra. Configuraremos una <strong>recepcionista virtual 100% funcional</strong> entrenada con los datos de su clínica. Gratis. Sin riesgo.
+                Compruébelo usted mismo. Configuraremos una <strong>Asistente Virtual 100% personalizada</strong> con los datos de su clínica. Sin compromiso ni riesgos.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
