@@ -1,0 +1,17 @@
+<svg width="600" height="150" viewBox="0 0 600 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sound Wave Icon -->
+  <!-- Left to Right wave visualization in brand orange -->
+  <path d="M40 75L50 75" stroke="#FF6A00" stroke-width="12" stroke-linecap="round"/>
+  <path d="M70 50L70 100" stroke="#FF6A00" stroke-width="12" stroke-linecap="round"/>
+  <path d="M100 30L100 120" stroke="#FF6A00" stroke-width="12" stroke-linecap="round"/>
+  <path d="M130 50L130 100" stroke="#FF6A00" stroke-width="12" stroke-linecap="round"/>
+  <path d="M160 65L160 85" stroke="#FF6A00" stroke-width="12" stroke-linecap="round"/>
+  
+  <!-- Modern Geometric N stylized (optional, but let's stick to clean text + icon for clarity) -->
+  
+  <!-- Text: Nova -->
+  <text x="200" y="100" fill="white" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="800" font-size="90" letter-spacing="-2">Nova</text>
+  
+  <!-- Text: AI Voice -->
+  <text x="440" y="100" fill="white" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="400" font-size="90" letter-spacing="-1">AI</text>
+</svg>
