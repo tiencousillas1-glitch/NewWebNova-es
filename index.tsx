@@ -1105,12 +1105,12 @@ const App = () => {
               <div className="bg-bg-card border border-white/10 p-1 rounded-3xl shadow-2xl relative">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent rounded-3xl pointer-events-none"></div>
 
-                <div className="bg-[#0A0B10] rounded-[22px] p-8 md:p-10 relative overflow-hidden">
+                <div className="bg-[#0A0B10] rounded-[22px] p-8 md:p-10 relative overflow-hidden min-h-[460px] flex flex-col justify-center">
                   {/* Glow Effect */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-brand to-transparent opacity-50"></div>
 
                   {formState === 'success' ? (
-                    <div className="absolute inset-0 bg-[#0A0B10] flex flex-col items-center justify-center text-center p-8 z-20 animate-[fadeIn_0.5s_ease-out]">
+                    <div className="absolute inset-0 h-full w-full bg-[#0A0B10] flex flex-col items-center justify-center text-center px-6 sm:px-8 py-8 z-20 animate-[fadeIn_0.5s_ease-out]">
                       <div className="w-20 h-20 bg-green-500/10 border border-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
                         <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                       </div>
@@ -1148,22 +1148,22 @@ const App = () => {
                         <div>
                           <label htmlFor="calendar" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Sistema de Calendario Actual</label>
                           <select id="calendar" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all appearance-none cursor-pointer">
-                            <option value="" disabled selected>Seleccionar Sistema...</option>
-                            <option>Google Calendar</option>
-                            <option>Outlook / Office 365</option>
-                            <option>iCloud</option>
-                            <option>Agenda de Papel</option>
-                            <option>Otro</option>
+                            <option value="" disabled selected className="text-gray-400">Seleccionar Sistema...</option>
+                            <option className="bg-[#0A0B10] text-white">Google Calendar</option>
+                            <option className="bg-[#0A0B10] text-white">Outlook / Office 365</option>
+                            <option className="bg-[#0A0B10] text-white">iCloud</option>
+                            <option className="bg-[#0A0B10] text-white">Agenda de Papel</option>
+                            <option className="bg-[#0A0B10] text-white">Otro</option>
                           </select>
                         </div>
 
                         <div>
                           <label htmlFor="volume" className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">Volumen Mensual de Pacientes</label>
                           <select id="volume" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all appearance-none cursor-pointer">
-                            <option value="" disabled selected>Seleccionar Volumen...</option>
-                            <option>Nuevos (0-200)</option>
-                            <option>En Crecimiento (200-1000)</option>
-                            <option>Alto Volumen (1000+)</option>
+                            <option value="" disabled selected className="text-gray-400">Seleccionar Volumen...</option>
+                            <option className="bg-[#0A0B10] text-white">Nuevos (0-200)</option>
+                            <option className="bg-[#0A0B10] text-white">En Crecimiento (200-1000)</option>
+                            <option className="bg-[#0A0B10] text-white">Alto Volumen (1000+)</option>
                           </select>
                         </div>
 
