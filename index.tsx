@@ -613,7 +613,7 @@ const App = () => {
   }
 
   return (
-    <div className="overflow-x-hidden bg-[#07080B] text-white font-sans selection:bg-brand-500/30">
+    <main className="overflow-x-hidden bg-[#07080B] text-white font-sans selection:bg-brand-500/30">
       {/* (Rest of the original landing page content remains here, slightly adjusted for navigation) */}
       {/* 1) HEADER + STICKY NAV */}
       <header className="fixed w-full top-0 z-50 bg-[#07080B]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
@@ -627,6 +627,8 @@ const App = () => {
               <img
                 src="/logo_final.png?v=2"
                 alt="Nova AI Voice"
+                width="168"
+                height="56"
                 className="h-14 w-auto object-contain transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_0_25px_rgba(255,106,0,0.5)]"
               />
             </div>
@@ -654,6 +656,8 @@ const App = () => {
               <button
                 className="md:hidden text-gray-300 focus:outline-none"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Cerrar menú móvil" : "Abrir menú móvil"}
+                aria-expanded={mobileMenuOpen}
               >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {mobileMenuOpen ? (
@@ -1189,7 +1193,7 @@ const App = () => {
           </div>
         </footer >
       </main >
-    </div >
+    </main >
   );
 };
 
