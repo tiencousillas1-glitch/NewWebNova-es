@@ -768,9 +768,7 @@ const App = () => {
             </p>
 
             {/* Clarification Text */}
-            <p className="text-sm text-text-muted/60 mb-8 font-medium">
-              Esta es una demo de voz en vivo. La programación de citas está desactivada en esta experiencia. Úsela para evaluar la calidad, la velocidad de la llamada y cómo Nova maneja conversaciones reales con pacientes.
-            </p>
+
 
 
             {/* WIDGET CONTAINER - Refactored for Stacking Context Safety */}
@@ -923,7 +921,7 @@ const App = () => {
               </span>
 
               <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                Construiremos Su Demo Personalizada en <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">48 Horas</span>
+                Construimos Su Demo Personalizada en <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">48 Horas</span>
               </h2>
 
               <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
