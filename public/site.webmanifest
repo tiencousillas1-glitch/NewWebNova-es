@@ -1,0 +1,23 @@
+{
+  "name": "Nova AI Voice",
+  "short_name": "Nova AI",
+  "description": "Recepcionista de IA para clinicas dentales y ortodonticas. Responda cada llamada y agende consultas 24/7.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07080B",
+  "theme_color": "#FF6A00",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

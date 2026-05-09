@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" width="520" height="140">
+  <defs>
+    <linearGradient id="w2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00D4FF"></stop>
+      <stop offset="55%" stop-color="#00D4FF"></stop>
+      <stop offset="100%" stop-color="#FF6B35"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="520" height="140" fill="#FAFAF7"></rect>
+  <g transform="translate(28,22)">
+    <path d="M 10 56 C 16 56, 18 18, 28 18 C 38 18, 40 62, 50 62 C 60 62, 62 26, 72 26 C 80 26, 82 50, 86 50" fill="none" stroke="url(#w2)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M 14 76 Q 48 92, 82 76" fill="none" stroke="#00D4FF" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round"></path>
+  </g>
+  <text x="148" y="78" fill="#0A1628" font-family="Space Grotesk, system-ui, sans-serif" font-weight="700" font-size="56" letter-spacing="-1.6">Nova</text>
+  <text x="150" y="108" font-family="Space Grotesk, system-ui, sans-serif" font-weight="500" font-size="14" letter-spacing="3">
+    <tspan fill="#FF6B35">AI</tspan><tspan fill="rgba(10,22,40,0.55)" dx="6">VOICE</tspan>
+  </text>
+</svg>
