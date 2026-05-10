@@ -24,9 +24,9 @@ interface AssessmentData {
   clinicName: string;
   avgCallsPerDay: number;
   receptionConfig: 'Dedicated' | 'Multitarea';
-  leadFollowUpTime: '< 5 min' | '< 1 hour' | 'Mismo dia' | 'Dia siguiente';
+  leadFollowUpTime: '< 5 min' | '< 1 hora' | 'Mismo día' | 'Día siguiente';
   runsAds: boolean;
-  missedCallsStrategy: 'Buzon de voz' | 'Servicio de contestacion' | 'Nada';
+  missedCallsStrategy: 'Buzón de voz' | 'Servicio de contestación' | 'Nada';
   avgCaseValue: number;
 }
 
@@ -56,18 +56,18 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
   if (data.receptionConfig === 'Multitarea') {
     missedCallRate += 0.15;
     riskScore += 25;
-    recommendations.push('Cuando el equipo balancea pacientes y telefonos, algunas llamadas quedan sin respuesta en momentos de alta demanda.');
+    recommendations.push('Cuando el equipo atiende pacientes, pagos y teléfonos al mismo tiempo, algunas llamadas quedan sin respuesta en los momentos de mayor demanda.');
   }
 
   // 2. Speed to Lead Risk
   switch (data.leadFollowUpTime) {
-    case 'Dia siguiente':
+    case 'Día siguiente':
       missedCallRate += 0.15;
       riskScore += 25;
-      recommendations.push('Responder al dia siguiente reduce la conversion frente a responder en los primeros 5 minutos.');
+      recommendations.push('Responder al día siguiente reduce la conversión frente a responder en los primeros 5 minutos.');
       break;
-    case 'Mismo dia':
-    case '< 1 hour':
+    case 'Mismo día':
+    case '< 1 hora':
       missedCallRate += 0.05;
       riskScore += 10;
       break;
@@ -81,16 +81,16 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
     missedCallRate += 0.15;
     riskScore += 30;
     recommendations.push('Cuando una llamada no llega a nadie, ese lead se pierde por completo.');
-  } else if (data.missedCallsStrategy === 'Buzon de voz') {
+  } else if (data.missedCallsStrategy === 'Buzón de voz') {
     missedCallRate += 0.10; // Most people don't leave voicemails or wait for call backs
     riskScore += 15;
-    recommendations.push('Muchos pacientes cuelgan al escuchar el buzon de voz y llaman a otra clinica.');
+    recommendations.push('Muchos pacientes cuelgan al escuchar el buzón de voz y llaman a otra clínica.');
   }
 
   // Ad Spend Risk Multiplier
   if (data.runsAds) {
     riskScore += 10;
-    recommendations.push('El trafico pago combinado con llamadas perdidas consume presupuesto mucho mas rapido.');
+    recommendations.push('El tráfico pago combinado con llamadas perdidas consume presupuesto mucho más rápido.');
   }
 
   // Calculate actual missed calls
@@ -111,7 +111,7 @@ const calculateMissedCallRisk = (data: AssessmentData): AssessmentResults => {
   const riskLevel = riskScore >= 60 ? 'HIGH' : riskScore >= 30 ? 'MEDIUM' : 'LOW';
 
   if (recommendations.length === 0) {
-      recommendations.push('Su cobertura es buena, pero la IA ayuda a responder cada llamada 24/7.');
+      recommendations.push('Su cobertura es buena, pero la IA puede ayudarle a responder cada llamada 24/7.');
   }
 
   return {
@@ -129,9 +129,9 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
     clinicName: '',
     avgCallsPerDay: 40,
     receptionConfig: 'Multitarea',
-    leadFollowUpTime: '< 1 hour',
+    leadFollowUpTime: '< 1 hora',
     runsAds: false,
-    missedCallsStrategy: 'Buzon de voz',
+    missedCallsStrategy: 'Buzón de voz',
     avgCaseValue: 4500 // Typical Ortho case value
   });
 
@@ -174,11 +174,11 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
         <div className="glass-panel rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Como se llama su clinica?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cómo se llama su clínica?</h2>
               <input
                 type="text"
                 className="w-full bg-black/40 border border-white/10 rounded-2xl px-6 py-4 text-white text-lg focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/50 transition-all"
-                placeholder="Ej. Clinica Dental Nova"
+                placeholder="Ej. Clínica Dental Nova"
                 value={formData.clinicName}
                 onChange={(e) => updateField('clinicName', e.target.value)}
                 autoFocus
@@ -188,8 +188,8 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cuantas llamadas entrantes recibe al dia?</h2>
-              <p className="text-text-muted">Un estimado esta bien.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cuántas llamadas entrantes recibe al día?</h2>
+              <p className="text-text-muted">Un estimado está bien.</p>
               <div className="flex items-center gap-4">
                 <input
                   type="number"
@@ -204,7 +204,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Como funciona su recepcion?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Cómo funciona su recepción?</h2>
               <div className="grid grid-cols-1 gap-4">
                 <button
                   onClick={() => updateField('receptionConfig', 'Multitarea')}
@@ -226,9 +226,9 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 4 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Que tan rapido devuelve llamadas perdidas?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Qué tan rápido devuelve llamadas perdidas?</h2>
               <div className="space-y-3">
-                {['< 5 min', '< 1 hour', 'Mismo dia', 'Dia siguiente'].map((option) => (
+                {['< 5 min', '< 1 hora', 'Mismo día', 'Día siguiente'].map((option) => (
                   <button
                     key={option}
                     onClick={() => updateField('leadFollowUpTime', option)}
@@ -256,7 +256,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
                     : 'bg-white/10 text-text-muted hover:bg-white/20'
                     }`}
                 >
-                  Yes
+                  Sí
                 </button>
                 <button
                   onClick={() => updateField('runsAds', false)}
@@ -273,9 +273,9 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
 
           {step === 6 && (
             <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Que pasa con las llamadas perdidas?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">¿Qué pasa con las llamadas perdidas?</h2>
               <div className="space-y-3">
-                {['Buzon de voz', 'Servicio de contestacion', 'Nada'].map((option) => (
+                {['Buzón de voz', 'Servicio de contestación', 'Nada'].map((option) => (
                   <button
                     key={option}
                     onClick={() => updateField('missedCallsStrategy', option)}
@@ -294,7 +294,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
           {step === 7 && (
             <div className="space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold text-white">¿Valor promedio por caso?</h2>
-              <p className="text-text-muted">Revenue per new patient (e.g., Aligner/Braces case).</p>
+              <p className="text-text-muted">Ingreso estimado por nuevo paciente, por ejemplo un caso de alineadores u ortodoncia.</p>
               <div className="relative">
                 <span className="absolute left-6 top-1/2 -translate-y-1/2 text-white/50 text-2xl font-bold">$</span>
                 <input
@@ -316,7 +316,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
                 onClick={handleAtras}
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold rounded-xl transition-all"
               >
-                Atras
+                Atrás
               </button>
             )}
             <button
@@ -324,7 +324,7 @@ const AssessmentForm = ({ onComplete }: { onComplete: (data: AssessmentData) => 
               disabled={step === 1 && !formData.clinicName}
               className="flex-1 px-8 py-4 bg-brand hover:bg-brand-hover text-white font-bold rounded-xl shadow-[0_0_30px_rgba(255,106,0,0.3)] transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {step === totalSteps ? 'Calculate Revenue Loss' : 'Continue'}
+              {step === totalSteps ? 'Calcular ingresos perdidos' : 'Continuar'}
             </button>
           </div>
         </div>
@@ -372,7 +372,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-black text-white">Resultados de evaluacion de la clinica</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-white">Resultados de evaluación de la clínica</h1>
           <p className="text-xl text-text-muted">{data.clinicName}</p>
         </div>
 
@@ -402,7 +402,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
                 className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-brand [&::-webkit-slider-thumb]:shadow-[0_0_15px_rgba(255,106,0,0.5)]"
               />
               <p className="text-xs text-text-muted mt-4">
-                *Calculo: {slidingMissedCalls} llamadas perdidas x 5% de conversion x ${data.avgCaseValue.toLocaleString()} de valor por caso
+                *Cálculo: {slidingMissedCalls} llamadas perdidas x 5% de conversión x ${data.avgCaseValue.toLocaleString()} de valor por caso
               </p>
             </div>
           </div>
@@ -425,7 +425,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
 
         {/* Analysis */}
         <div className="glass-panel rounded-2xl p-8 border border-white/10">
-          <h3 className="text-2xl font-bold text-white mb-6">Por que se pierden pacientes</h3>
+          <h3 className="text-2xl font-bold text-white mb-6">Por qué se pierden pacientes</h3>
           <div className="space-y-4">
             {results.recommendations.map((rec, idx) => (
               <div key={idx} className="flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-white/5">
@@ -442,7 +442,7 @@ const AssessmentResults = ({ data, results, onBookDemo }: {
         <div className="text-center space-y-6 py-8">
           <h2 className="text-3xl md:text-4xl font-black text-white">Capture esos ${slidingRevenue.toLocaleString()}</h2>
           <p className="text-xl text-text-muted max-w-2xl mx-auto">
-            Nova AI Voice responde al instante, califica al paciente y agenda la consulta.
+            Nova AI Voice responde al instante, califica al paciente y agenda la consulta antes de que la oportunidad se enfríe.
           </p>
           <button
             onClick={onBookDemo}
@@ -524,7 +524,7 @@ const App = () => {
       setFormState('success');
     } catch (err) {
       console.error(err);
-      alert("Algo salio mal. Intente nuevamente.");
+      alert("Algo salió mal. Intente nuevamente.");
       setFormState('idle');
     }
   };
@@ -555,7 +555,7 @@ const App = () => {
         setTimeout(() => findAndClickWidget(attempts + 1), 500);
       } else {
         window.dispatchEvent(new CustomEvent('nedzo-open'));
-        alert("La agente de IA esta cargando. Intente nuevamente en un momento.");
+        alert("La agente de IA está cargando. Intente nuevamente en un momento.");
       }
     };
 
@@ -610,13 +610,13 @@ const App = () => {
       id: 'inbound',
       step: '01',
       title: 'Cobertura siempre activa',
-      description: 'Nova AI Voice responde llamadas perdidas, fuera de horario y de alto volumen antes de que lleguen al buzon de voz.',
+      description: 'Nova AI Voice responde llamadas perdidas, fuera de horario y de alto volumen antes de que lleguen al buzón de voz.',
       outcome: 'Menos oportunidades perdidas'
     },
     {
       id: 'qualification',
       step: '02',
-      title: 'Recepcion estructurada',
+      title: 'Recepción estructurada',
       description: 'Valentina recopila los datos que su equipo necesita para que cada paciente llegue calificado y documentado.',
       outcome: 'Mejor traspaso al equipo'
     },
@@ -624,8 +624,8 @@ const App = () => {
       id: 'booking',
       step: '03',
       title: 'Agenda controlada',
-      description: 'Las citas se agendan solo cuando horario, disponibilidad e informacion requerida estan alineados.',
-      outcome: 'Agendas mas limpias'
+      description: 'Las citas se agendan solo cuando el horario, la disponibilidad y la información requerida están alineados.',
+      outcome: 'Agendas más limpias'
     }
   ];
 
@@ -771,23 +771,23 @@ const App = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
               </span>
-              Para clinicas dentales y ortodonticas
+              Para clínicas dentales y ortodónticas
             </div>
 
             {/* H1 */}
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-normal mb-8 leading-tight drop-shadow-xl relative z-20">
-              Deje de perder pacientes valiosos <br className="hidden md:block" />
-              por <span className="gradient-text relative inline-block">
-                Llamadas perdidas
+              No deje que una llamada perdida <br className="hidden md:block" />
+              se convierta en un <span className="gradient-text relative inline-block">
+                paciente perdido
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="mt-4 max-w-3xl mx-auto text-xl md:text-2xl text-text-muted leading-relaxed font-medium">
-              Nova AI Voice ayuda a clinicas dentales y ortodonticas a responder cada llamada, calificar al paciente correcto y agendar consultas <span className="text-brand font-bold">24/7</span> sin reemplazar a su recepcion.
+              Nova AI Voice ayuda a clínicas dentales y ortodónticas a responder llamadas, calificar pacientes y agendar consultas <span className="text-brand font-bold">24/7</span>, sin reemplazar a su equipo de recepción.
             </p>
-            <p className="mt-5 max-w-2xl mx-auto text-sm md:text-base uppercase tracking-normal text-text-soft">
-              Valentina atiende desbordes, llamadas fuera de horario y momentos ocupados para que su equipo se mantenga enfocado en la clinica.
+            <p className="mt-5 max-w-3xl mx-auto text-sm md:text-base uppercase tracking-normal text-text-soft">
+              Cuando la recepción está saturada o la clínica está cerrada, Valentina responde por su equipo y mantiene la conversación avanzando.
             </p>
 
             {/* CTA Buttons */}
@@ -834,7 +834,7 @@ const App = () => {
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-normal text-white mb-6">Experimente a Valentina en vivo</h2>
 
             <p className="text-text-muted text-lg max-w-2xl mx-auto mb-12">
-              Valentina es la recepcionista de Nova AI Voice para clinicas dentales y ortodonticas. Pruebe como se siente capturar llamadas perdidas, calificar pacientes y agendar consultas en una conversacion real.
+              Valentina es la recepcionista de Nova AI Voice para clínicas dentales y ortodónticas. Pruebe cómo se siente capturar llamadas perdidas, calificar pacientes y agendar consultas en una conversación real.
             </p>
 
             <div className="relative mx-auto max-w-4xl">
@@ -868,7 +868,7 @@ const App = () => {
                                 <span className="text-xs font-bold text-text-soft">00:18</span>
                               </div>
                               <div className="text-sm font-black text-white">Consulta de nuevo paciente</div>
-                              <div className="mt-1 text-xs text-text-muted">Prefiere consulta por la manana</div>
+                              <div className="mt-1 text-xs text-text-muted">Prefiere consulta por la mañana</div>
                             </div>
 
                             <div className="mt-4 flex h-12 items-center justify-between rounded-2xl bg-bg-main/60 px-4 text-brand">
@@ -954,9 +954,9 @@ const App = () => {
         <section id="features" className="py-24 relative bg-[linear-gradient(180deg,rgba(14,30,54,0.72),rgba(10,22,40,0.98))]">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold tracking-normal mb-4">Construido para apoyar una recepcion fuerte</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold tracking-normal mb-4">Construido para apoyar una recepción fuerte</h2>
               <p className="text-text-muted max-w-2xl mx-auto">
-                Mantenga a su equipo enfocado en los pacientes de la clinica mientras Nova AI Voice atiende desbordes, llamadas fuera de horario y la recepcion inicial de forma consistente.
+                Mantenga a su equipo enfocado en los pacientes de la clínica mientras Nova AI Voice responde llamadas, ordena la información clave y deja cada consulta lista para seguimiento.
               </p>
             </div>
 
@@ -965,8 +965,8 @@ const App = () => {
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Sin primeras impresiones perdidas</h3>
-                <p className="text-text-muted">Nova AI Voice responde rapido cuando su equipo esta ocupado, en almuerzo o en otra llamada, para que los pacientes valiosos no caigan al buzon de voz.</p>
+                <h3 className="text-xl font-bold mb-2">Cada llamada recibe una respuesta profesional</h3>
+                <p className="text-text-muted">Nova AI Voice responde rápido cuando su equipo está ocupado, en almuerzo o en otra llamada, para que una consulta interesada no termine en el buzón de voz.</p>
               </div>
 
               <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
@@ -974,15 +974,15 @@ const App = () => {
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
                 <h3 className="text-xl font-bold mb-2">Agenda con reglas claras</h3>
-                <p className="text-text-muted">Las consultas se agendan solo cuando se captura la informacion correcta y la cita encaja con las reglas y disponibilidad de su clinica.</p>
+                <p className="text-text-muted">Las consultas se agendan solo cuando se captura la información correcta y la cita encaja con las reglas y disponibilidad de su clínica.</p>
               </div>
 
               <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
                 <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand/20 transition-colors">
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Calificacion consistente</h3>
-                <p className="text-text-muted">Cada llamada sigue un intake estructurado para que su equipo reciba mejores traspasos y consultas mas calificadas.</p>
+                <h3 className="text-xl font-bold mb-2">Calificación consistente</h3>
+                <p className="text-text-muted">Cada llamada sigue un intake estructurado para que su equipo reciba mejores traspasos y consultas más calificadas.</p>
               </div>
 
               <div className="p-5 sm:p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/30 transition-all hover:-translate-y-1 group">
@@ -1006,7 +1006,7 @@ const App = () => {
                   <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
                 <h3 className="text-xl font-bold mb-2">Experiencia clara para el paciente</h3>
-                <p className="text-text-muted">Los pacientes reciben una interaccion rapida y profesional que se siente moderna y util, no como un call center generico ni una automatizacion rigida.</p>
+                <p className="text-text-muted">Los pacientes reciben una interacción rápida y profesional que se siente moderna y útil, no como un call center genérico ni una automatización rígida.</p>
               </div>
             </div>
           </div>
@@ -1036,7 +1036,7 @@ const App = () => {
               </h2>
 
               <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
-                En lugar de pedirle que imagine el flujo, configuramos una demo segun los horarios, intake y reglas de agenda de su clinica para que escuche la diferencia antes de comprometerse.
+                En lugar de pedirle que imagine el flujo, configuramos una demo según los horarios, intake y reglas de agenda de su clínica para que escuche la diferencia antes de comprometerse.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
@@ -1049,7 +1049,7 @@ const App = () => {
                 </a>
                 <div className="flex items-center gap-2 text-sm text-text-muted opacity-80">
                   <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-                  <span>La configuracion empieza cuando usted este listo para salir en vivo</span>
+                  <span>La configuración empieza cuando usted esté listo para salir en vivo</span>
                 </div>
               </div>
 
@@ -1062,11 +1062,11 @@ const App = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-normal">Precios simples para consultas agendadas</h2>
-              <p className="text-text-muted mb-8">Configuracion clara, precio mensual claro y una prueba en vivo antes del despliegue.</p>
+              <p className="text-text-muted mb-8">Planes claros para clínicas que quieren capturar más consultas sin ampliar recepción.</p>
 
               {/* Setup Banner */}
               <div className="inline-block bg-brand/10 border border-brand/30 rounded-lg px-6 py-2 mb-8">
-                <span className="text-brand font-semibold text-sm md:text-base">$300 de configuracion + prueba en vivo de 14 dias incluida</span>
+                <span className="text-brand font-semibold text-sm md:text-base">$300 de configuración + prueba en vivo de 14 días incluida</span>
               </div>
 
               {/* Toggle */}
@@ -1095,7 +1095,7 @@ const App = () => {
               <div className="bg-bg-card border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all flex flex-col h-full">
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white">Starter</h3>
-                  <p className="text-sm text-text-muted mt-2 min-h-10">Perfecto para clinicas pequenas que empiezan con automatizacion.</p>
+                  <p className="text-sm text-text-muted mt-2 min-h-10">Perfecto para clínicas pequeñas que empiezan con automatización.</p>
                 </div>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-white">${isAnual ? 237 : 297}</span>
@@ -1106,8 +1106,8 @@ const App = () => {
                 <ul className="mt-8 space-y-4 text-sm text-text-muted flex-grow">
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 1 agente de voz IA</li>
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 250 minutos / mes</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Atencion de llamadas entrantes 24/7</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Calificacion y agenda basica</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Atención de llamadas entrantes 24/7</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Calificación y agenda básica</li>
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Notificaciones por email</li>
                 </ul>
                 <div className="mt-6 pt-6 border-t border-white/5 text-xs text-text-muted text-center">
@@ -1117,24 +1117,24 @@ const App = () => {
 
               {/* Growth */}
               <div className="bg-bg-card border border-brand/50 rounded-2xl p-8 relative shadow-[0_0_40px_rgba(0,212,255,0.15)] transform md:-translate-y-4 flex flex-col h-full">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand text-bg-main text-xs font-bold px-3 py-1 rounded-full uppercase tracking-normal">Mas popular</div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand text-bg-main text-xs font-bold px-3 py-1 rounded-full uppercase tracking-normal">Más popular</div>
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white">Growth</h3>
-                  <p className="text-sm text-text-muted mt-2 min-h-10">Nuestro plan estandar para clinicas en crecimiento con necesidades de agenda.</p>
+                  <p className="text-sm text-text-muted mt-2 min-h-10">Nuestro plan estándar para clínicas en crecimiento con necesidades de agenda.</p>
                 </div>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-white">${isAnual ? 397 : 497}</span>
                   <span className="text-text-muted">/mes</span>
                   <div className="text-xs text-text-muted mt-1">{isAnual ? 'Facturado anualmente' : 'Facturado mensualmente'}</div>
                 </div>
-                <a href="#demo" className="block w-full text-center py-3 bg-brand rounded-lg text-bg-main font-bold hover:bg-brand-hover transition-colors shadow-lg">Iniciar prueba de 14 dias</a>
+                <a href="#demo" className="block w-full text-center py-3 bg-brand rounded-lg text-bg-main font-bold hover:bg-brand-hover transition-colors shadow-lg">Iniciar prueba de 14 días</a>
                 <ul className="mt-8 space-y-4 text-sm text-text-muted flex-grow">
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 1 agente de voz IA</li>
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 400 minutos / mes</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Atencion de llamadas entrantes 24/7</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span className="text-white font-medium">Sincronizacion de calendario</span></li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Calificacion avanzada de pacientes</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Logica inteligente de agenda</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Atención de llamadas entrantes 24/7</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span className="text-white font-medium">Sincronización de calendario</span></li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Calificación avanzada de pacientes</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Lógica inteligente de agenda</li>
                 </ul>
                 <div className="mt-6 pt-6 border-t border-white/5 text-xs text-text-muted text-center">
                   Minutos extra disponibles
@@ -1145,7 +1145,7 @@ const App = () => {
               <div className="bg-bg-card border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-all flex flex-col h-full">
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-white">Pro</h3>
-                  <p className="text-sm text-text-muted mt-2 min-h-10">Cobertura maxima para clinicas con mayor volumen de llamadas.</p>
+                  <p className="text-sm text-text-muted mt-2 min-h-10">Cobertura máxima para clínicas con mayor volumen de llamadas.</p>
                 </div>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-white">${isAnual ? 557 : 697}</span>
@@ -1156,13 +1156,13 @@ const App = () => {
                 <ul className="mt-8 space-y-4 text-sm text-text-muted flex-grow">
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Hasta 2 agentes de voz IA</li>
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> 600 minutos / mes</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Atencion de llamadas entrantes 24/7</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Atención de llamadas entrantes 24/7</li>
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Soporte prioritario</li>
-                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Gestion de desborde de llamadas</li>
+                  <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Gestión de desborde de llamadas</li>
                   <li className="flex gap-3"><svg className="w-5 h-5 text-brand flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Guiones personalizados</li>
                 </ul>
                 <div className="mt-6 pt-6 border-t border-white/5 text-xs text-text-muted text-center">
-                  Ideal para clinicas de alto volumen
+                  Ideal para clínicas de alto volumen
                 </div>
               </div>
 
@@ -1179,29 +1179,29 @@ const App = () => {
                 <span className="text-brand font-bold tracking-normal uppercase text-xs">FAQ</span>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 tracking-normal">Preguntas frecuentes</h2>
-              <p className="text-text-muted text-lg">Todo lo que necesita saber antes de probar Nova AI Voice en su clinica.</p>
+              <p className="text-text-muted text-lg">Todo lo que necesita saber antes de probar Nova AI Voice en su clínica.</p>
             </div>
             <div className="space-y-4">
               {[
                 {
-                  q: "¿Que es exactamente Nova AI Voice?",
-                  a: "Nova AI Voice es una recepcionista de IA para clinicas dentales y ortodonticas. Responde llamadas, califica pacientes, captura datos clave y agenda consultas mientras su recepcion se concentra en las personas que ya estan en la clinica."
+                  q: "¿Qué es exactamente Nova AI Voice?",
+                  a: "Nova AI Voice es una recepcionista de IA para clínicas dentales y ortodónticas. Responde llamadas, califica pacientes, captura datos clave y agenda consultas mientras su recepción se concentra en las personas que ya están en la clínica."
                 },
                 {
-                  q: "¿Nova AI Voice reemplaza a mi equipo de recepcion?",
-                  a: "No. Nova AI Voice apoya a su equipo durante desbordes, llamadas fuera de horario, almuerzos y momentos ocupados. Su personal mantiene el control mientras Valentina atiende el intake repetitivo."
+                  q: "¿Reemplaza a mi equipo de recepción?",
+                  a: "No. Nova AI Voice apoya a su equipo cuando la recepción está ocupada, durante almuerzos, fuera de horario o en momentos de alto volumen. Su personal mantiene el control mientras Valentina atiende el intake repetitivo."
                 },
                 {
                   q: "¿Valentina puede agendar citas?",
-                  a: "Si. Valentina puede recopilar la informacion correcta del paciente y agendar consultas usando las reglas de calendario que usted apruebe durante la configuracion."
+                  a: "Sí. Valentina puede recopilar la información correcta del paciente y agendar consultas usando las reglas de calendario que usted apruebe durante la configuración."
                 },
                 {
-                  q: "¿Con que calendarios puede trabajar?",
-                  a: "Nova AI Voice puede configurarse con Google Calendar, Outlook, iCloud, Jane, Cliniko u otro proceso de agenda que su clinica ya use."
+                  q: "¿Con qué calendarios puede trabajar?",
+                  a: "Nova AI Voice puede configurarse con Google Calendar, Outlook, iCloud, Jane, Cliniko u otro proceso de agenda que su clínica ya use."
                 },
                 {
                   q: "¿Puedo probarlo antes de comprometerme?",
-                  a: "Si. Podemos construir una demo adaptada a sus horarios, flujo de recepcion y reglas de agenda para que escuche como Valentina maneja escenarios reales antes del despliegue."
+                  a: "Sí. Podemos construir una demo adaptada a sus horarios, flujo de recepción y reglas de agenda para que escuche cómo Valentina maneja escenarios reales antes del despliegue."
                 }
               ].map((item, i) => (
                 <details key={i} className="glass-card rounded-2xl group">
@@ -1232,10 +1232,10 @@ const App = () => {
                     Solicitud de llamada inicial
                   </div>
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 leading-tight tracking-normal">
-                    Vea como Nova AI Voice puede <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-accent">apoyar a su recepcion</span>
+                    Vea cómo Nova AI Voice puede <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-accent">apoyar a su recepción</span>
                   </h2>
                   <p className="text-xl text-text-muted leading-relaxed">
-                    Revisaremos su flujo de llamadas, mostraremos donde se escapan los leads y mapearemos una demo en vivo que encaje con su proceso actual de agenda.
+                    Revisaremos su flujo de llamadas, mostraremos dónde se escapan los leads y mapearemos una demo en vivo que encaje con su proceso actual de agenda.
                   </p>
                 </div>
 
@@ -1271,7 +1271,7 @@ const App = () => {
                         <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                       </div>
                       <h3 className="text-3xl font-bold text-white mb-3">Solicitud recibida</h3>
-                      <p className="text-text-muted mb-6">Nuestro equipo lo contactara pronto para confirmar su llamada inicial y los detalles de configuracion de la demo.</p>
+                      <p className="text-text-muted mb-6">Nuestro equipo lo contactará pronto para confirmar su llamada inicial y los detalles de configuración de la demo.</p>
                       <div className="w-full bg-white/5 rounded-lg p-4 border border-white/10">
                         <div className="flex justify-between text-xs text-text-muted mb-2">
                           <span>Status</span>
@@ -1286,13 +1286,13 @@ const App = () => {
                     <>
                       <div className="mb-8">
                         <h3 className="text-2xl font-bold text-white mb-2">Solicite su llamada inicial</h3>
-                        <p className="text-sm text-text-muted">Cuentenos sobre su clinica. Usaremos esta informacion para adaptar la demo de Nova AI Voice a su flujo actual.</p>
+                        <p className="text-sm text-text-muted">Cuéntenos sobre su clínica. Usaremos esta información para adaptar la demo de Nova AI Voice a su flujo actual.</p>
                       </div>
 
                       <form onSubmit={handleBookDemo} className="space-y-5 relative z-10">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
-                            <label htmlFor="name" className="block text-xs font-semibold text-text-muted uppercase tracking-normal mb-2">Responsable de la clinica</label>
+                            <label htmlFor="name" className="block text-xs font-semibold text-text-muted uppercase tracking-normal mb-2">Responsable de la clínica</label>
                             <input type="text" id="name" required className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all placeholder:text-white/20" placeholder="Dr. Nombre" />
                           </div>
                           <div>
@@ -1333,7 +1333,7 @@ const App = () => {
                         </button>
 
                         <p className="text-center text-[10px] text-text-muted">
-                          No se requiere tarjeta de credito. Toma menos de 30 segundos.
+                          No se requiere tarjeta de crédito. Toma menos de 30 segundos.
                         </p>
                       </form>
                     </>
@@ -1348,8 +1348,8 @@ const App = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-text-muted text-sm">© 2025 Nova AI Voice. Todos los derechos reservados. Cumplimiento HIPAA.</p>
               <div className="flex flex-wrap items-center gap-6 text-sm text-text-muted">
-                <a href="/privacy" className="hover:text-white transition-colors">Politica de privacidad</a>
-                <a href="/terms" className="hover:text-white transition-colors">Terminos de servicio</a>
+                <a href="/privacy" className="hover:text-white transition-colors">Política de privacidad</a>
+                <a href="/terms" className="hover:text-white transition-colors">Términos de servicio</a>
                 <span className="text-white/20">|</span>
                 <span className="text-white/40 text-xs">Integra con:</span>
                 <a href="https://workspace.google.com/products/calendar/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Google Calendar</a>
@@ -1385,12 +1385,12 @@ const updatePageMeta = (title: string, description: string, canonicalPath: strin
   setMeta('meta[property="og:url"]', 'content', `https://www.novaaivoice.lat${canonicalPath}`);
 };
 
-// --- Politica de privacidad Page ---
+// --- Política de privacidad Page ---
 const PrivacyPage = () => {
   React.useEffect(() => {
     updatePageMeta(
-      'Politica de privacidad | Nova AI Voice',
-      'Politica de privacidad de Nova AI Voice. Conozca como manejamos datos de pacientes, cumplimiento HIPAA y retencion de datos para nuestra recepcionista de IA.',
+      'Política de privacidad | Nova AI Voice',
+      'Política de privacidad de Nova AI Voice. Conozca cómo manejamos datos de pacientes, cumplimiento HIPAA y retención de datos para nuestra recepcionista de IA.',
       '/privacy'
     );
   }, []);
@@ -1400,32 +1400,32 @@ const PrivacyPage = () => {
       <a href="/" className="text-brand font-bold text-lg hover:opacity-80 transition-opacity">← Nova AI Voice</a>
     </header>
     <main className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-black mb-4">Politica de privacidad</h1>
-      <p className="text-text-muted mb-10 text-sm">Ultima actualizacion: 27 de abril de 2025</p>
+      <h1 className="text-4xl font-black mb-4">Política de privacidad</h1>
+      <p className="text-text-muted mb-10 text-sm">Última actualización: 27 de abril de 2025</p>
       <div className="space-y-8 text-text-muted leading-relaxed">
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">1. Informacion que recopilamos</h2>
-          <p>Nova AI Voice recopila la informacion que usted proporciona al solicitar una llamada o demo, incluyendo nombre, email de trabajo, nombre de la clinica y sistema de calendario. Tambien procesamos datos de llamadas a traves de nuestros agentes de voz IA en nombre de su clinica, lo que puede incluir informacion protegida de salud (PHI).</p>
+          <h2 className="text-xl font-bold text-white mb-3">1. Información que recopilamos</h2>
+          <p>Nova AI Voice recopila la información que usted proporciona al solicitar una llamada o demo, incluyendo nombre, email de trabajo, nombre de la clínica y sistema de calendario. También procesamos datos de llamadas a través de nuestros agentes de voz IA en nombre de su clínica, lo que puede incluir información protegida de salud (PHI).</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-white mb-3">2. Cumplimiento HIPAA</h2>
-          <p>Nova AI Voice opera en cumplimiento con HIPAA. Actuamos como Business Associate cuando procesamos PHI en nombre de entidades cubiertas. Un Business Associate Agreement (BAA) esta disponible y es requerido para despliegues clinicos. La PHI se cifra en transito y en reposo, y nunca se vende ni se usa con fines publicitarios.</p>
+          <p>Nova AI Voice opera en cumplimiento con HIPAA. Actuamos como Business Associate cuando procesamos PHI en nombre de entidades cubiertas. Un Business Associate Agreement (BAA) está disponible y es requerido para despliegues clínicos. La PHI se cifra en tránsito y en reposo, y nunca se vende ni se usa con fines publicitarios.</p>
         </section>
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">3. Como usamos su informacion</h2>
-          <p>Usamos la informacion recopilada para prestar y mejorar el servicio de recepcionista IA, comunicarnos con usted sobre su cuenta o demo y enviar actualizaciones relevantes con su consentimiento. No vendemos datos personales a terceros.</p>
+          <h2 className="text-xl font-bold text-white mb-3">3. Cómo usamos su información</h2>
+          <p>Usamos la información recopilada para prestar y mejorar el servicio de recepcionista IA, comunicarnos con usted sobre su cuenta o demo y enviar actualizaciones relevantes con su consentimiento. No vendemos datos personales a terceros.</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-white mb-3">4. Retencion de datos</h2>
-          <p>Las grabaciones y transcripciones de llamadas se conservan durante el periodo definido en su acuerdo de servicio. Puede solicitar la eliminacion de sus datos en cualquier momento contactandonos. Los datos de la clinica se eliminan permanentemente dentro de los 30 dias posteriores a la terminacion de la cuenta.</p>
+          <p>Las grabaciones y transcripciones de llamadas se conservan durante el periodo definido en su acuerdo de servicio. Puede solicitar la eliminación de sus datos en cualquier momento contactándonos. Los datos de la clínica se eliminan permanentemente dentro de los 30 días posteriores a la terminación de la cuenta.</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-white mb-3">5. Integraciones de terceros</h2>
-          <p>Nova se integra con calendarios de terceros como Google Calendar, Microsoft Outlook, Apple iCloud, Jane App y Cliniko. Los datos compartidos con esos sistemas se rigen por sus propias politicas de privacidad. Solo transmitimos los datos minimos necesarios para completar reservas de citas.</p>
+          <p>Nova se integra con calendarios de terceros como Google Calendar, Microsoft Outlook, Apple iCloud, Jane App y Cliniko. Los datos compartidos con esos sistemas se rigen por sus propias políticas de privacidad. Solo transmitimos los datos mínimos necesarios para completar reservas de citas.</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-white mb-3">6. Contacto</h2>
-          <p>Para consultas de privacidad, solicitudes de eliminacion de datos o ejecucion de un BAA, contactenos mediante el formulario de llamada inicial en <a href="/" className="text-brand hover:underline">novaaivoice.lat</a>.</p>
+          <p>Para consultas de privacidad, solicitudes de eliminación de datos o ejecución de un BAA, contáctenos mediante el formulario de llamada inicial en <a href="/" className="text-brand hover:underline">novaaivoice.lat</a>.</p>
         </section>
       </div>
     </main>
@@ -1433,12 +1433,12 @@ const PrivacyPage = () => {
   );
 };
 
-// --- Terminos de servicio Page ---
+// --- Términos de servicio Page ---
 const TermsPage = () => {
   React.useEffect(() => {
     updatePageMeta(
-      'Terminos de servicio | Nova AI Voice',
-      'Terminos de servicio de Nova AI Voice. Suscripcion, facturacion, uso aceptable y limitacion de responsabilidad para nuestra recepcionista de IA.',
+      'Términos de servicio | Nova AI Voice',
+      'Términos de servicio de Nova AI Voice. Suscripción, facturación, uso aceptable y limitación de responsabilidad para nuestra recepcionista de IA.',
       '/terms'
     );
   }, []);
@@ -1448,28 +1448,28 @@ const TermsPage = () => {
       <a href="/" className="text-brand font-bold text-lg hover:opacity-80 transition-opacity">← Nova AI Voice</a>
     </header>
     <main className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-black mb-4">Terminos de servicio</h1>
-      <p className="text-text-muted mb-10 text-sm">Ultima actualizacion: 27 de abril de 2025</p>
+      <h1 className="text-4xl font-black mb-4">Términos de servicio</h1>
+      <p className="text-text-muted mb-10 text-sm">Última actualización: 27 de abril de 2025</p>
       <div className="space-y-8 text-text-muted leading-relaxed">
         <section>
           <h2 className="text-xl font-bold text-white mb-3">1. Descripcion del servicio</h2>
-          <p>Nova AI Voice presta servicios de recepcionista de voz con IA para clinicas dentales y ortodonticas. Al suscribirse a cualquier plan, usted acepta estos terminos de servicio. El servicio incluye atencion de llamadas entrantes, calificacion de pacientes, agenda de citas y campanas de reactivacion segun el plan seleccionado.</p>
+          <p>Nova AI Voice presta servicios de recepcionista de voz con IA para clínicas dentales y ortodónticas. Al suscribirse a cualquier plan, usted acepta estos términos de servicio. El servicio incluye atención de llamadas entrantes, calificación de pacientes, agenda de citas y campañas de reactivación según el plan seleccionado.</p>
         </section>
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">2. Suscripcion y facturacion</h2>
-          <p>Todos los planes requieren una tarifa unica de configuracion de $297. Las suscripciones mensuales se facturan el primer dia de cada ciclo. Las suscripciones anuales reciben un 20% de descuento. Los minutos se reinician mensualmente y no se acumulan. Hay minutos adicionales disponibles en Growth y Pro. Puede cancelar con aviso escrito de 30 dias.</p>
+          <h2 className="text-xl font-bold text-white mb-3">2. Suscripción y facturación</h2>
+          <p>Todos los planes requieren una tarifa única de configuración de $297. Las suscripciones mensuales se facturan el primer día de cada ciclo. Las suscripciones anuales reciben un 20% de descuento. Los minutos se reinician mensualmente y no se acumulan. Hay minutos adicionales disponibles en Growth y Pro. Puede cancelar con aviso escrito de 30 días.</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-white mb-3">3. Uso aceptable</h2>
-          <p>Usted acepta usar Nova AI Voice exclusivamente para fines legales dentro de una practica de salud autorizada. Es responsable de asegurar que el uso del servicio cumpla con leyes y regulaciones aplicables, incluyendo HIPAA, y de obtener el consentimiento adecuado de pacientes sobre atencion asistida por IA.</p>
+          <p>Usted acepta usar Nova AI Voice exclusivamente para fines legales dentro de una práctica de salud autorizada. Es responsable de asegurar que el uso del servicio cumpla con leyes y regulaciones aplicables, incluyendo HIPAA, y de obtener el consentimiento adecuado de pacientes sobre atención asistida por IA.</p>
         </section>
         <section>
-          <h2 className="text-xl font-bold text-white mb-3">4. Limitacion de responsabilidad</h2>
-          <p>Nova AI Voice es una herramienta complementaria de comunicacion y no reemplaza criterio clinico ni servicios de emergencia. No somos responsables por citas perdidas, resultados de pacientes o perdida de ingresos derivada de interrupciones del servicio. Nuestra responsabilidad maxima se limita a las cuotas mensuales pagadas en los 30 dias previos a cualquier reclamo.</p>
+          <h2 className="text-xl font-bold text-white mb-3">4. Limitación de responsabilidad</h2>
+          <p>Nova AI Voice es una herramienta complementaria de comunicación y no reemplaza criterio clínico ni servicios de emergencia. No somos responsables por citas perdidas, resultados de pacientes o pérdida de ingresos derivada de interrupciones del servicio. Nuestra responsabilidad máxima se limita a las cuotas mensuales pagadas en los 30 días previos a cualquier reclamo.</p>
         </section>
         <section>
           <h2 className="text-xl font-bold text-white mb-3">5. Modificaciones</h2>
-          <p>Nos reservamos el derecho de actualizar estos terminos con aviso previo de 30 dias. El uso continuado del servicio despues de la notificacion constituye aceptacion de los terminos actualizados.</p>
+          <p>Nos reservamos el derecho de actualizar estos términos con aviso previo de 30 días. El uso continuado del servicio después de la notificación constituye aceptación de los términos actualizados.</p>
         </section>
       </div>
     </main>
