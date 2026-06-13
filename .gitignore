@@ -26,3 +26,7 @@ dist-ssr
 # Ignore generated ezgif frames
 public/frames/
 
+# Playwright CLI artifacts (local browser automation)
+.playwright-cli/
+.playwright/
+
